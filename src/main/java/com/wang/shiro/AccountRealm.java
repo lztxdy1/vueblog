@@ -4,7 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import com.wang.entity.User;
 import com.wang.service.UserService;
 import com.wang.token.JwtToken;
-import com.wang.utiks.JwtUtils;
+import com.wang.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -16,11 +16,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class AccountRealm extends AuthorizingRealm {
 
-    private final JwtUtils jwtUtils;
+    private final JwtUtil jwtUtil;
     private final UserService userService;
 
-    public AccountRealm(JwtUtils jwtUtils, UserService userService) {
-        this.jwtUtils = jwtUtils;
+    public AccountRealm(JwtUtil jwtUtil, UserService userService) {
+        this.jwtUtil = jwtUtil;
         this.userService = userService;
     }
 
@@ -36,7 +36,7 @@ public class AccountRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         JwtToken jwt = (JwtToken) token;
         log.info("jwt----------------->{}", jwt);
-        String userId = jwtUtils.getClaimByToken((String) jwt.getPrincipal()).getSubject();
+        String userId = jwtUtil.getClaimByToken((String) jwt.getPrincipal()).getSubject();
         User user = userService.getById(Long.parseLong(userId));
         if(user == null) {
             throw new UnknownAccountException("账户不存在！");

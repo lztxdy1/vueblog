@@ -1,4 +1,4 @@
-package com.wang.utiks;
+package com.wang.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -17,7 +17,7 @@ import java.util.Date;
 @Data
 @Component
 @ConfigurationProperties(prefix = "wang.jwt")
-public class JwtUtils {
+public class JwtUtil {
 
     private String secret;
     private long expire;

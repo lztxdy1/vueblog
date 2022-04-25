@@ -7,7 +7,7 @@ import com.wang.common.dto.LoginDto;
 import com.wang.common.lang.Result;
 import com.wang.entity.User;
 import com.wang.service.UserService;
-import com.wang.utiks.JwtUtils;
+import com.wang.util.JwtUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.util.Assert;
@@ -23,11 +23,11 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginController {
 
     private final UserService userService;
-    private final JwtUtils jwtUtils;
+    private final JwtUtil jwtUtil;
 
-    public LoginController(UserService userService, JwtUtils jwtUtils) {
+    public LoginController(UserService userService, JwtUtil jwtUtil) {
         this.userService = userService;
-        this.jwtUtils = jwtUtils;
+        this.jwtUtil = jwtUtil;
     }
 
     @PostMapping("/login")
@@ -39,7 +39,7 @@ public class LoginController {
             return Result.fail("密码不正确");
         }
 
-        String jwt = jwtUtils.generateToken(user.getId());
+        String jwt = jwtUtil.generateToken(user.getId());
         response.setHeader("Authorization", jwt);
         response.setHeader("Access-control-Expose-Header", "Authorization");
 

@@ -3,7 +3,7 @@ package com.wang.shiro;
 import cn.hutool.json.JSONUtil;
 import com.wang.common.lang.Result;
 import com.wang.token.JwtToken;
-import com.wang.utiks.JwtUtils;
+import com.wang.util.JwtUtil;
 import io.jsonwebtoken.Claims;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -23,10 +23,10 @@ import java.io.IOException;
 @Component
 public class JwtFilter extends AuthenticatingFilter {
 
-    private final JwtUtils jwtUtils;
+    private final JwtUtil jwtUtil;
 
-    public JwtFilter(JwtUtils jwtUtils) {
-        this.jwtUtils = jwtUtils;
+    public JwtFilter(JwtUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
     }
 
     @Override
@@ -47,8 +47,8 @@ public class JwtFilter extends AuthenticatingFilter {
             return true;
         } else {
             // 判断是否已过期
-            Claims claim = jwtUtils.getClaimByToken(token);
-            if(claim == null || jwtUtils.isTokenExpired(claim.getExpiration())) {
+            Claims claim = jwtUtil.getClaimByToken(token);
+            if(claim == null || jwtUtil.isTokenExpired(claim.getExpiration())) {
                 throw new ExpiredCredentialsException("token已失效，请重新登录！");
             }
         }
