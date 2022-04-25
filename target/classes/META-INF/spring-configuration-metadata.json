@@ -1,0 +1,28 @@
+{
+  "groups": [
+    {
+      "name": "wang.jwt",
+      "type": "com.wang.utiks.JwtUtils",
+      "sourceType": "com.wang.utiks.JwtUtils"
+    }
+  ],
+  "properties": [
+    {
+      "name": "wang.jwt.expire",
+      "type": "java.lang.Long",
+      "sourceType": "com.wang.utiks.JwtUtils",
+      "defaultValue": 0
+    },
+    {
+      "name": "wang.jwt.header",
+      "type": "java.lang.String",
+      "sourceType": "com.wang.utiks.JwtUtils"
+    },
+    {
+      "name": "wang.jwt.secret",
+      "type": "java.lang.String",
+      "sourceType": "com.wang.utiks.JwtUtils"
+    }
+  ],
+  "hints": []
+}
