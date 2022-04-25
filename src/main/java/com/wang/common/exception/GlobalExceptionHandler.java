@@ -1,5 +1,6 @@
 package com.wang.common.exception;
 
+import com.sun.xml.internal.ws.policy.spi.AssertionCreationException;
 import com.wang.common.lang.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.ShiroException;
@@ -40,5 +41,13 @@ public class GlobalExceptionHandler {
         ObjectError objectError = bindingResult.getAllErrors().stream().findFirst().get();
 
         return Result.fail(objectError.getDefaultMessage());
+    }
+
+    // 断言异常
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = IllegalArgumentException.class)
+    public Result handle(IllegalArgumentException exception) {
+        log.error("Assert异常----------{}", exception);
+        return Result.fail(exception.getMessage());
     }
 }
