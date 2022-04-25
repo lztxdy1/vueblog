@@ -4,6 +4,8 @@ package com.wang.controller;
 import com.wang.common.lang.Result;
 import com.wang.entity.User;
 import com.wang.service.UserService;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -24,6 +26,7 @@ public class UserController {
         this.userService = userService;
     }
 
+    @RequiresAuthentication
     @GetMapping("/{id}")
     public Result getUserById(@PathVariable Integer id) {
 
@@ -37,5 +40,10 @@ public class UserController {
 
     }
 
+
+    @PostMapping("/save")
+    public Result save(@Validated @RequestBody User user) {
+        return Result.success(user);
+    }
 
 }
